@@ -1,0 +1,20 @@
+{
+  "name": "homebrew-beer-monitor",
+  "version": "1.0.0",
+  "description": "A monitor app for my homebrew beer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fgandellini/homebrew-beer-monitor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fgandellini/homebrew-beer-monitor/issues"
+  },
+  "homepage": "https://github.com/fgandellini/homebrew-beer-monitor#readme"
+}
