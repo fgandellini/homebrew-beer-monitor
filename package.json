@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "A monitor app for my homebrew beer",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./scripts/run-env .env node --experimental-strip-types src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,18 @@
   "bugs": {
     "url": "https://github.com/fgandellini/homebrew-beer-monitor/issues"
   },
-  "homepage": "https://github.com/fgandellini/homebrew-beer-monitor#readme"
+  "homepage": "https://github.com/fgandellini/homebrew-beer-monitor#readme",
+  "dependencies": {
+    "@tuya/tuya-connector-nodejs": "^2.1.2",
+    "debug": "^4.4.0",
+    "zod": "^3.24.1"
+  },
+  "engines": {
+    "node": ">=23.6.0",
+    "npm": ">=10.9.2"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/node": "^22.10.7"
+  }
 }

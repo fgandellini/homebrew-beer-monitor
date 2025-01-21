@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euf -o pipefail
+
+set -o allexport
+source "$1"
+"${@:2}"
+set +o allexport
