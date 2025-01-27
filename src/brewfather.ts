@@ -5,6 +5,7 @@ export type BrewfatherConfig = {
   apiUrl: string
   streamId: string
   name: string
+  dryRunMode: boolean
 }
 
 export type BrewfatherData = {
@@ -102,8 +103,18 @@ export type BrewfatherData = {
   percentage?: number
 }
 
+const formatRequestBody = (name: string, data: BrewfatherData) => {
+  return { name, ...data }
+}
+
+const dryWrite = (config: BrewfatherConfig) => async (data: BrewfatherData) => {
+  const body = formatRequestBody(config.name, data)
+  log('DRYRUN write to Brewfather', body)
+}
+
 const write = (config: BrewfatherConfig) => async (data: BrewfatherData) => {
-  log('Writing data to Brewfather', data)
+  const body = formatRequestBody(config.name, data)
+  log('Writing data to Brewfather', body)
 
   const brewfatherApi = `${config.apiUrl}/stream?id=${config.streamId}`
   fetch(brewfatherApi, {
@@ -111,10 +122,10 @@ const write = (config: BrewfatherConfig) => async (data: BrewfatherData) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name: config.name, ...data }),
+    body: JSON.stringify(body),
   })
 }
 
 export const connectBrewfather = (config: BrewfatherConfig) => ({
-  write: write(config),
+  write: config.dryRunMode ? dryWrite(config) : write(config),
 })

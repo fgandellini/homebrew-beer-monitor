@@ -9,6 +9,7 @@ export const Config = z.object({
   BREWFATHER_API_URL: z.string(),
   BREWFATHER_STREAM_ID: z.string(),
   BREWFATHER_NAME: z.string(),
+  BREWFATHER_DRYRUN: z.coerce.boolean(),
 
   DEVICE_POLLING_INTERVAL_MIN: z.coerce.number(),
 })

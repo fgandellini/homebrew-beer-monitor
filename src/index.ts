@@ -3,6 +3,7 @@ import { Config } from './config.ts'
 import { connectTuyaDevice } from './tuya.ts'
 import { connectBrewfather } from './brewfather.ts'
 import { minutesToMs, poll } from './polling.ts'
+import { toBrewfatherData } from './mapper.ts'
 
 const config = Config.parse(process.env)
 const log = logger(config.BREWFATHER_NAME)
@@ -21,19 +22,16 @@ const brewfather = connectBrewfather({
   apiUrl: config.BREWFATHER_API_URL,
   streamId: config.BREWFATHER_STREAM_ID,
   name: config.BREWFATHER_NAME,
+  dryRunMode: config.BREWFATHER_DRYRUN,
 })
 
 poll(minutesToMs(config.DEVICE_POLLING_INTERVAL_MIN), async () => {
   const startTime = new Date()
   log('Polling device data...')
 
-  const data = await device.read()
-
-  await brewfather.write({
-    temp: data[0].value,
-    gravity: 1.0,
-    ph: 7.0,
-  })
+  const deviceData = await device.read()
+  const brewfatherData = toBrewfatherData(deviceData)
+  await brewfather.write(brewfatherData)
 
   const endTime = new Date()
   const elapsedTime = endTime.getTime() - startTime.getTime()
